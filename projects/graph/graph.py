@@ -16,11 +16,10 @@ class Graph:
         self.vertices[vertex_id] = set()
 
     def add_edge(self, v1, v2):
-        """
-        Add a directed edge to the graph.
-        """
+        #if both are in graph
         if v1 in self.vertices and v2 in self.vertices:
             self.vertices[v1] and self.vertices[v2]
+        #if not in graph
         else:
             raise IndexError("Vertex does not exist in graph")
 
@@ -47,9 +46,8 @@ class Graph:
                 visited.add(v)
                 
                 for next_vertice in self.get_neighbors(v):
-                    q.dequeue(next_vertice)
+                    q.enqueue(next_vertice)
         
-
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
@@ -93,8 +91,7 @@ class Graph:
         pass  # TODO
 
 if __name__ == '__main__':
-    graph = Graph()  # Instantiate your graph
-    # https://github.com/LambdaSchool/Graphs/blob/master/objectives/breadth-first-search/img/bfs-visit-order.png
+    graph = Graph() #Empty graph
     graph.add_vertex(1)
     graph.add_vertex(2)
     graph.add_vertex(3)
