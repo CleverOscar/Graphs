@@ -27,10 +27,34 @@ class Stack():
         return len(self.stack)
 
 
+# Traversal throught path
+
+class TraversalGraph():
+    def __init__(self):
+        self.rooms = {}
+
+    def add_room(self, id, exits):
+        # Creates an entrance
+        directions = {}
+
+        for direction in exits:
+            directions[direction] = '?'
+
+        self.rooms[id] = directions
+
+    def get_rear_directon(self, direction):
+        if direction == 'n':
+            return 's'
+        if direction == 's':
+            return 'n'
+        if direction == 'w':
+            return 'e'
+        if direction == 'e':
+            return 'w'
 
 
 # You may uncomment the smaller graphs for development and testing purposes.
-# map_file = "maps/test_line.txt"
+map_file = "maps/test_line.txt"
 # map_file = "maps/test_cross.txt"
 # map_file = "maps/test_loop.txt"
 # map_file = "maps/test_loop_fork.txt"
@@ -48,11 +72,6 @@ player = Player(world.starting_room)
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
 # traversal_path = []
-
-class Graph:
-    def __init__(self):
-
-
 
 
 
@@ -76,12 +95,12 @@ else:
 #######
 # UNCOMMENT TO WALK AROUND
 #######
-player.current_room.print_room_description(player)
-while True:
-    cmds = input("-> ").lower().split(" ")
-    if cmds[0] in ["n", "s", "e", "w"]:
-        player.travel(cmds[0], True)
-    elif cmds[0] == "q":
-        break
-    else:
-        print("I did not understand that command.")
+# player.current_room.print_room_description(player)
+# while True:
+#     cmds = input("-> ").lower().split(" ")
+#     if cmds[0] in ["n", "s", "e", "w"]:
+#         player.travel(cmds[0], True)
+#     elif cmds[0] == "q":
+#         break
+#     else:
+#         print("I did not understand that command.")
