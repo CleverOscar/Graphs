@@ -67,6 +67,7 @@ class SocialGraph:
         q = Queue()
 
         q.enqueue([user_id])
+
         # while q isn't empty
         while q.size() > 0:
             current_path = q.dequeue()
