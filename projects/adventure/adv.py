@@ -8,60 +8,16 @@ from ast import literal_eval
 # Load world
 world = World()
 
-# Stack for DFS
-
-class Stack():
-    def __init__(self):
-        self.stack = []
-
-    def push(self, item):
-        self.stack.appen(item)
-
-    def pop(self, item):
-        if self.stack > 0:
-            return self.stack.pop()
-        else:
-            return None
-
-    def size(self):
-        return len(self.stack)
-
-
-# Traversal throught path
-
-class TraversalGraph():
-    def __init__(self):
-        self.rooms = {}
-
-    def add_room(self, id, exits):
-        # Creates an entrance
-        directions = {}
-
-        for direction in exits:
-            directions[direction] = '?'
-
-        self.rooms[id] = directions
-
-    def get_rear_directon(self, direction):
-        if direction == 'n':
-            return 's'
-        if direction == 's':
-            return 'n'
-        if direction == 'w':
-            return 'e'
-        if direction == 'e':
-            return 'w'
-
-
 # You may uncomment the smaller graphs for development and testing purposes.
-map_file = "maps/test_line.txt"
+# map_file = "maps/test_line.txt"
 # map_file = "maps/test_cross.txt"
 # map_file = "maps/test_loop.txt"
 # map_file = "maps/test_loop_fork.txt"
-# map_file = "maps/main_maze.txt"
+map_file = "maps/main_maze.txt"
+
 
 # Loads the map into a dictionary
-room_graph=literal_eval(open(map_file, "r").read())
+room_graph = literal_eval(open(map_file, "r").read())
 world.load_graph(room_graph)
 
 # Print an ASCII map
@@ -71,8 +27,32 @@ player = Player(world.starting_room)
 
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
-# traversal_path = []
+traversal_path = []
+visited_rooms = set()
 
+opposite = {'n': 's', 's': "n", "w": "e", "e": "w"}
+
+
+def travel_world(visited=[]):
+    storage = []
+
+    for direction in player.current_room.get_exits():
+        player.travel(direction)
+
+        if player.current_room.id not in visited:
+            visited.append(player.current_room.id)
+            storage.append(direction)
+            recursive_storage = travel_world(visited)
+            storage = storage + recursive_storage
+            player.travel(opposite[direction])
+            storage.append(opposite[direction])
+        else:
+            player.travel(opposite[direction])
+
+    return storage
+
+
+traversal_path = travel_world()
 
 
 # TRAVERSAL TEST
@@ -85,11 +65,11 @@ for move in traversal_path:
     visited_rooms.add(player.current_room)
 
 if len(visited_rooms) == len(room_graph):
-    print(f"TESTS PASSED: {len(traversal_path)} moves, {len(visited_rooms)} rooms visited")
+    print(
+        f"TESTS PASSED: {len(traversal_path)} moves, {len(visited_rooms)} rooms visited")
 else:
     print("TESTS FAILED: INCOMPLETE TRAVERSAL")
     print(f"{len(room_graph) - len(visited_rooms)} unvisited rooms")
-
 
 
 #######
