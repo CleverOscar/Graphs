@@ -1,3 +1,7 @@
+from queue import Queue
+import random
+import time
+
 class User:
     def __init__(self, name):
         self.name = name
@@ -59,6 +63,14 @@ class SocialGraph:
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+
+        q = Queue()
+
+        q.enqueue([user_id])
+
+        # while q isn't empty
+        while q.size() > 0:
+            current_path = q.dequeue()
         return visited
 
 
