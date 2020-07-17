@@ -8,13 +8,33 @@ from ast import literal_eval
 # Load world
 world = World()
 
+# Stack for DFS
+
+class Stack():
+    def __init__(self):
+        self.stack = []
+
+    def push(self, item):
+        self.stack.appen(item)
+
+    def pop(self, item):
+        if self.stack > 0:
+            return self.stack.pop()
+        else:
+            return None
+
+    def size(self):
+        return len(self.stack)
+
+
+
 
 # You may uncomment the smaller graphs for development and testing purposes.
 # map_file = "maps/test_line.txt"
 # map_file = "maps/test_cross.txt"
 # map_file = "maps/test_loop.txt"
 # map_file = "maps/test_loop_fork.txt"
-map_file = "maps/main_maze.txt"
+# map_file = "maps/main_maze.txt"
 
 # Loads the map into a dictionary
 room_graph=literal_eval(open(map_file, "r").read())
@@ -27,7 +47,12 @@ player = Player(world.starting_room)
 
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
-traversal_path = []
+# traversal_path = []
+
+class Graph:
+    def __init__(self):
+
+
 
 
 
